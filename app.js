@@ -8,9 +8,9 @@ const port = process.env.PORT || 3000;
 const dirname = path.resolve(path.dirname(""));
 
 //mailchimp
-const MCapiKey = "apikey";
-const MCServer = "server";
-const MCListId = "listid";
+const MCapiKey = "b455585fc144fe321ae7086f17f37f15-us21";
+const MCServer = "us21";
+const MCListId = "49efc1691a";
 
 mailchimp.setConfig({
   apiKey: MCapiKey,
