@@ -10,8 +10,8 @@ with a button available to go back and check for errors and submit the form agai
 
 ## Live Site
 
-[Newsletter Signup](https://anxious-pike-capris.cyclic.app/)
-Deployed on cyclic.sh 
+### [Newsletter Signup](https://anxious-pike-capris.cyclic.app/)
+<p>Deployed on cyclic.sh</p>
 
 ## Frontend Images
 ![page1-onclick](https://user-images.githubusercontent.com/19247505/227821434-3e571005-27f2-4aae-a147-534683bd1deb.png)
