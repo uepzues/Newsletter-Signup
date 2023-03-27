@@ -7,6 +7,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const dirname = path.resolve(path.dirname(""));
 
+//server config
 dotenv.config();
 
 //mailchimp
@@ -42,16 +43,25 @@ app.post("/", async (req, res) => {
     },
   };
 
-  try {
-    const response = await mailchimp.lists.addListMember(MCListId, contact);
-    res.sendFile(path.join(dirname, "success.html"));
+  const addListMember = (MCListId, contact) => {
+    return mailchimp.lists.addListMember(MCListId, contact)
+      .then(response => {
+        console.log(`Successfully added contact.. The contact's id is ${response.id}.`);
+        return response.id;
+      });
+  };
 
-    console.log(`Successfully added contact as an audience member. The contact's id is ${response.id}.`);
-  } catch (error) {
-    res.sendFile(path.join(dirname, "fail.html"));
-    console.error(error);
-  }
+  const sendResponse = (res, fileName) => {
+    res.sendFile(path.join(dirname, fileName));
+  };
 
+  addListMember(MCListId, contact)
+    .then(memberId => sendResponse(res, 'success.html'))
+    .catch(error => {
+      console.error(error);
+      sendResponse(res, 'fail.html');
+    });
+  
 });
 
 app.listen(port, () => {
