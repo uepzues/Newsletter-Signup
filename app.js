@@ -1,14 +1,18 @@
 import express from "express";
 import mailchimp from "@mailchimp/mailchimp_marketing";
-import https from "https";
 import path from "path";
+import fs from "fs"
 
 const app = express();
 const port = process.env.PORT || 3000;
 const dirname = path.resolve(path.dirname(""));
 
-//mailchimp
+const apiKey = fs.readFileSync(path.join(dirname, "apikey.text"), 'utf8');
 
+//mailchimp
+const MCapiKey = apiKey.trim();
+const MCServer = "us21";
+const MCListId = "49efc1691a";
 
 mailchimp.setConfig({
   apiKey: MCapiKey,
@@ -40,7 +44,7 @@ app.post("/", async (req, res) => {
   try {
     const response = await mailchimp.lists.addListMember(MCListId, contact);
     res.sendFile(path.join(dirname, "success.html"));
-    // TODO: Get the new member's ID from the response and log it
+
     console.log(`Successfully added contact as an audience member. The contact's id is ${response.id}.`);
   } catch (error) {
     res.sendFile(path.join(dirname, "fail.html"));
