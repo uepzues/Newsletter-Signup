@@ -1,17 +1,17 @@
 import express from "express";
 import mailchimp from "@mailchimp/mailchimp_marketing";
+import dotenv from "dotenv";
 import path from "path";
-import fs from "fs"
 
 const app = express();
 const port = process.env.PORT || 3000;
 const dirname = path.resolve(path.dirname(""));
 
-const apiKey = fs.readFileSync(path.join(dirname, "apikey.text"), 'utf8');
+dotenv.config();
 
 //mailchimp
-const MCapiKey = apiKey.trim();
-const MCServer = "us21";
+const MCapiKey = process.env.apiKeyMC;
+const MCServer = process.env.serverMC;
 const MCListId = "49efc1691a";
 
 mailchimp.setConfig({
@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 //routes
 app.get("/", (req, res) => {
   res.sendFile(path.join(dirname, "signup.html"));
+
 });
 
 app.post("/", async (req, res) => {
@@ -55,4 +56,5 @@ app.post("/", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
+
 });
