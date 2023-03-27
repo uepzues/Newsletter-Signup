@@ -2,6 +2,7 @@ import express from "express";
 import mailchimp from "@mailchimp/mailchimp_marketing";
 import dotenv from "dotenv";
 import path from "path";
+// import fs from "fs"
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,7 +12,7 @@ dotenv.config();
 
 //mailchimp
 const MCapiKey = process.env.apiKeyMC;
-const MCServer = process.env.serverMC;
+const MCServer = "us21";
 const MCListId = "49efc1691a";
 
 mailchimp.setConfig({
