@@ -11,7 +11,7 @@ const dirname = path.resolve(path.dirname(""));
 dotenv.config();
 
 //mailchimp
-const MCapiKey = process.env.apiKeyMC;
+const MCapiKey = process.env.apiKeyMC; //set on server
 const MCServer = "us21";
 const MCListId = "49efc1691a";
 
@@ -43,12 +43,10 @@ app.post("/", async (req, res) => {
     },
   };
 
-  const addListMember = (MCListId, contact) => {
-    return mailchimp.lists.addListMember(MCListId, contact)
-      .then(response => {
-        console.log(`Successfully added contact.. The contact's id is ${response.id}.`);
-        return response.id;
-      });
+  const addListMember = async (MCListId, contact) => {
+    const response = await mailchimp.lists.addListMember(MCListId, contact);
+    console.log(`Successfully added contact.. The contact's id is ${response.id}.`);
+    return response.id;
   };
 
   const sendResponse = (res, fileName) => {
